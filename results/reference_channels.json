@@ -1,0 +1,33 @@
+{
+  "candidate": "all 18 bipolar channels",
+  "channels": [
+    "FP1-F7",
+    "F7-T7",
+    "T7-P7",
+    "P7-O1",
+    "FP1-F3",
+    "F3-C3",
+    "C3-P3",
+    "P3-O1",
+    "FP2-F4",
+    "F4-C4",
+    "C4-P4",
+    "P4-O2",
+    "FP2-F8",
+    "F8-T8",
+    "T8-P8",
+    "P8-O2",
+    "FZ-CZ",
+    "CZ-PZ"
+  ],
+  "recordings_considered": 664,
+  "recordings_with_all_18": 661,
+  "hours_considered": 961.64,
+  "hours_with_all_18": 958.63,
+  "seizures_considered": 182,
+  "seizures_with_all_18": 169,
+  "recordings_with_some_but_not_all_18": 0,
+  "recordings_with_none_of_18": 3,
+  "decision_rule": "use all 18 if >=95% of recordings and >=90% of seizures keep them",
+  "decision": "all 18"
+}

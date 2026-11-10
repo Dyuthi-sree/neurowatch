@@ -1,0 +1,5 @@
+split,patients,files,hours,seizures,ictal_minutes,windows,positive_windows,positive_pct,windows_partial_overlap_negative
+train,14,382,607.7,117,124.6,1093464,3789,0.347,130
+val,4,101,174.76,32,20.7,314467,636,0.202,34
+test,4,181,179.18,33,39.7,322337,1213,0.376,24
+all,22,664,961.64,182,185.0,1730268,5638,0.326,188

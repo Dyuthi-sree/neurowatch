@@ -21,13 +21,20 @@
     "CZ-PZ"
   ],
   "recordings_considered": 664,
-  "recordings_with_all_18": 661,
+  "recordings_with_native_bipolar_18": 661,
+  "seizures_with_native_bipolar_18": 169,
+  "recordings_rebuilt_from_referential": [
+    "chb12/chb12_27.edf",
+    "chb12/chb12_28.edf",
+    "chb12/chb12_29.edf"
+  ],
+  "recordings_with_all_18": 664,
   "hours_considered": 961.64,
-  "hours_with_all_18": 958.63,
+  "hours_with_all_18": 961.64,
   "seizures_considered": 182,
-  "seizures_with_all_18": 169,
-  "recordings_with_some_but_not_all_18": 0,
-  "recordings_with_none_of_18": 3,
+  "seizures_with_all_18": 182,
+  "recordings_with_some_but_not_all_18_native": 0,
+  "recordings_with_none_of_18_native": 3,
   "decision_rule": "use all 18 if >=95% of recordings and >=90% of seizures keep them",
   "decision": "all 18"
 }

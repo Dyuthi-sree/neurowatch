@@ -20,6 +20,7 @@ import pandas as pd  # noqa: E402
 
 from neurowatch import plotting as P  # noqa: E402
 from neurowatch.channels import channel_index, read_edf_header  # noqa: E402
+from neurowatch.montage import resolve  # noqa: E402
 from neurowatch.config import (CHANNELS_18, EXCLUDED_CASES, FIGURES, FS, HEADERS,  # noqa: E402
                                PATIENT_OF_CASE, RAW, RESULTS)
 from neurowatch.summary_parser import parse_summary  # noqa: E402
@@ -52,6 +53,10 @@ def build_tables():
         h = read_edf_header(HEADERS / r)
         idx = channel_index(h["labels"])
         missing = [k for k, v in idx.items() if v is None]
+        try:
+            montage = resolve(h["labels"])["mode"]
+        except KeyError:
+            montage = "unavailable"
         e = summ.get(fname)
         n_sz = len(e.starts) if e else 0
         rec_rows.append({
@@ -59,6 +64,7 @@ def build_tables():
             "duration_s": h["duration_s"], "n_signals": h["n_signals"],
             "fs": sorted(set(h["fs"]))[0] if len(set(h["fs"])) == 1 else str(sorted(set(h["fs"]))),
             "n_ref18_present": 18 - len(missing), "missing_channels": ";".join(missing),
+            "montage": montage,
             "in_summary": e is not None, "in_records_with_seizures": fname in rws,
             "n_seizures": n_sz,
         })
@@ -77,11 +83,15 @@ def build_tables():
 
 def choose_reference(rec: pd.DataFrame) -> dict:
     inc = rec[~rec.case.isin(EXCLUDED_CASES)]
-    full = inc[inc.n_ref18_present == 18]
+    native = inc[inc.n_ref18_present == 18]
+    full = inc[inc.montage != "unavailable"]
     out = {
         "candidate": "all 18 bipolar channels",
         "channels": CHANNELS_18,
         "recordings_considered": int(len(inc)),
+        "recordings_with_native_bipolar_18": int(len(native)),
+        "seizures_with_native_bipolar_18": int(native.n_seizures.sum()),
+        "recordings_rebuilt_from_referential": sorted(inc[inc.montage == "rebuilt"].record.tolist()),
         "recordings_with_all_18": int(len(full)),
         "hours_considered": round(inc.duration_s.sum() / 3600, 2),
         "hours_with_all_18": round(full.duration_s.sum() / 3600, 2),
@@ -90,8 +100,8 @@ def choose_reference(rec: pd.DataFrame) -> dict:
     }
     # which channels, if dropped, would rescue the incomplete recordings?
     partial = inc[inc.n_ref18_present.between(1, 17)]
-    out["recordings_with_some_but_not_all_18"] = int(len(partial))
-    out["recordings_with_none_of_18"] = int((inc.n_ref18_present == 0).sum())
+    out["recordings_with_some_but_not_all_18_native"] = int(len(partial))
+    out["recordings_with_none_of_18_native"] = int((inc.n_ref18_present == 0).sum())
     rule = "use all 18 if >=95% of recordings and >=90% of seizures keep them"
     ok = (len(full) / len(inc) >= 0.95) and (full.n_seizures.sum() / inc.n_seizures.sum() >= 0.90)
     out["decision_rule"] = rule
@@ -174,15 +184,19 @@ def main():
 
     rec["excluded_reason"] = ""
     rec.loc[rec.case.isin(EXCLUDED_CASES), "excluded_reason"] = "case excluded (chb24)"
-    lack = (~rec.case.isin(EXCLUDED_CASES)) & (rec.n_ref18_present < 18)
+    lack = (~rec.case.isin(EXCLUDED_CASES)) & (rec.montage == "unavailable")
     rec.loc[lack, "excluded_reason"] = "missing reference channels"
     rec["included"] = rec.excluded_reason == ""
     rec.to_csv(RESULTS / "recordings.csv", index=False)
     sz = sz.merge(rec[["record", "included"]], on="record")
     sz.to_csv(RESULTS / "seizures.csv", index=False)
     rec[lack][["case", "file", "duration_s", "n_seizures", "missing_channels"]].assign(
-        reason="missing reference channels (referential montage)"
+        reason="reference channels unavailable (neither bipolar nor rebuildable)"
     ).to_csv(RESULTS / "excluded_recordings.csv", index=False)
+    rb = (~rec.case.isin(EXCLUDED_CASES)) & (rec.montage == "rebuilt")
+    rec[rb][["case", "file", "duration_s", "n_seizures"]].assign(
+        how="18 bipolar channels rebuilt as electrode differences (referential recording)"
+    ).to_csv(RESULTS / "rebuilt_recordings.csv", index=False)
     with open(RESULTS / "reference_channels.json", "w") as f:
         json.dump(ref, f, indent=2)
 
@@ -221,8 +235,13 @@ def main():
                f"{used.patient.nunique()} patients")
     rep.append("\n## Reference channel set\n")
     rep.append("```json\n" + json.dumps(ref, indent=2) + "\n```")
-    rep.append("\n## Excluded recordings (missing reference channels)\n")
+    rep.append("\n## Recordings rebuilt from referential electrodes (kept)\n")
+    for _, r in rec[rb].iterrows():
+        rep.append(f"- {r.record}: {r.n_seizures} seizures, {r.duration_s / 3600:.2f} h")
+    rep.append("\n## Excluded recordings (reference channels unavailable)\n")
     ex = rec[lack]
+    if ex.empty:
+        rep.append("- none")
     for _, r in ex.iterrows():
         rep.append(f"- {r.record}: {r.n_seizures} seizures, {r.duration_s / 3600:.2f} h, "
                    f"{18 - r.n_ref18_present} of 18 channels missing")

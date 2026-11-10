@@ -1,0 +1,4 @@
+case,file,duration_s,n_seizures,how
+chb12,chb12_27.edf,3600.0,6,18 bipolar channels rebuilt as electrode differences (referential recording)
+chb12,chb12_28.edf,3600.0,1,18 bipolar channels rebuilt as electrode differences (referential recording)
+chb12,chb12_29.edf,3624.0,6,18 bipolar channels rebuilt as electrode differences (referential recording)

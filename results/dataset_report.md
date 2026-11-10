@@ -4,7 +4,7 @@
 - Excluding chb24: 23 cases, 22 patients, 664 files, 961.64 h, 182 seizures; ages 1.5–22 y (18 F / 5 M cases)
 - chb24: 22 files, 16 seizures; age in SUBJECT-INFO: nan
 - Sampling rate: all files [256.0] Hz
-- After channel check (used for modelling): 661 files, 958.63 h, 169 seizures, 22 patients
+- After channel check (used for modelling): 664 files, 961.64 h, 182 seizures, 22 patients
 
 ## Reference channel set
 
@@ -32,23 +32,34 @@
     "CZ-PZ"
   ],
   "recordings_considered": 664,
-  "recordings_with_all_18": 661,
+  "recordings_with_native_bipolar_18": 661,
+  "seizures_with_native_bipolar_18": 169,
+  "recordings_rebuilt_from_referential": [
+    "chb12/chb12_27.edf",
+    "chb12/chb12_28.edf",
+    "chb12/chb12_29.edf"
+  ],
+  "recordings_with_all_18": 664,
   "hours_considered": 961.64,
-  "hours_with_all_18": 958.63,
+  "hours_with_all_18": 961.64,
   "seizures_considered": 182,
-  "seizures_with_all_18": 169,
-  "recordings_with_some_but_not_all_18": 0,
-  "recordings_with_none_of_18": 3,
+  "seizures_with_all_18": 182,
+  "recordings_with_some_but_not_all_18_native": 0,
+  "recordings_with_none_of_18_native": 3,
   "decision_rule": "use all 18 if >=95% of recordings and >=90% of seizures keep them",
   "decision": "all 18"
 }
 ```
 
-## Excluded recordings (missing reference channels)
+## Recordings rebuilt from referential electrodes (kept)
 
-- chb12/chb12_27.edf: 6 seizures, 1.00 h, 18 of 18 channels missing
-- chb12/chb12_28.edf: 1 seizures, 1.00 h, 18 of 18 channels missing
-- chb12/chb12_29.edf: 6 seizures, 1.01 h, 18 of 18 channels missing
+- chb12/chb12_27.edf: 6 seizures, 1.00 h
+- chb12/chb12_28.edf: 1 seizures, 1.00 h
+- chb12/chb12_29.edf: 6 seizures, 1.01 h
+
+## Excluded recordings (reference channels unavailable)
+
+- none
 
 ## Metadata inconsistencies found
 

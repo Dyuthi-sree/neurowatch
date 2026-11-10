@@ -1,0 +1,30 @@
+{
+  "seed": 42,
+  "n_draws": 20000,
+  "score": 0.01108,
+  "rule": "min sum |fraction - 4/22| of seizures and hours over val and test",
+  "patient_split": {
+    "chb01": "test",
+    "chb02": "train",
+    "chb03": "test",
+    "chb04": "train",
+    "chb05": "val",
+    "chb06": "val",
+    "chb07": "train",
+    "chb08": "train",
+    "chb09": "train",
+    "chb10": "val",
+    "chb11": "test",
+    "chb12": "train",
+    "chb13": "test",
+    "chb14": "train",
+    "chb15": "train",
+    "chb16": "val",
+    "chb17": "train",
+    "chb18": "train",
+    "chb19": "train",
+    "chb20": "train",
+    "chb22": "train",
+    "chb23": "train"
+  }
+}

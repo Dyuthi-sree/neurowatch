@@ -1,0 +1,171 @@
+{
+  "name": "rf_all18",
+  "channels": [
+    "FP1-F7",
+    "F7-T7",
+    "T7-P7",
+    "P7-O1",
+    "FP1-F3",
+    "F3-C3",
+    "C3-P3",
+    "P3-O1",
+    "FP2-F4",
+    "F4-C4",
+    "C4-P4",
+    "P4-O2",
+    "FP2-F8",
+    "F8-T8",
+    "T8-P8",
+    "P8-O2",
+    "FZ-CZ",
+    "CZ-PZ"
+  ],
+  "n_features": 108,
+  "rf_params": {
+    "n_estimators": 300,
+    "max_features": "sqrt",
+    "min_samples_leaf": 5,
+    "class_weight": "balanced_subsample",
+    "n_jobs": -1,
+    "random_state": 42
+  },
+  "n_train_pos": 3789,
+  "n_train_neg_sampled": 200000,
+  "n_train_neg_total": 1089675,
+  "fit_seconds": 33.1,
+  "selection_rule": "maximise validation sensitivity subject to FA/h <= 1.0; ties -> lower FA/h, then lower median delay; if no setting meets the FA target, minimise FA/h",
+  "merge_gap_s": 30.0,
+  "val_window_auroc": 0.8885613764921628,
+  "val_window_auprc": 0.1969269413649553,
+  "val_positive_rate": 0.0020224697663029827,
+  "test_window_auroc": 0.9043685633458152,
+  "test_window_auprc": 0.27418968596168414,
+  "test_positive_rate": 0.0037631423013802325,
+  "selected": {
+    "k": 5,
+    "theta": 0.95
+  },
+  "val_event": {
+    "n_seizures": 32,
+    "n_detected": 9,
+    "sensitivity": 0.28125,
+    "n_false_alarms": 4,
+    "hours": 174.7611111111111,
+    "fa_per_hour": 0.02288838732237658,
+    "median_delay_s": 65.0,
+    "per_patient": {
+      "chb05": {
+        "n_seizures": 5,
+        "n_detected": 5,
+        "sensitivity": 1.0,
+        "n_false_alarms": 1,
+        "hours": 39.00277777777778,
+        "fa_per_hour": 0.02563919948721601,
+        "median_delay_s": 71.0
+      },
+      "chb06": {
+        "n_seizures": 10,
+        "n_detected": 0,
+        "sensitivity": 0.0,
+        "n_false_alarms": 3,
+        "hours": 66.73500000000001,
+        "fa_per_hour": 0.04495392222971453,
+        "median_delay_s": NaN
+      },
+      "chb10": {
+        "n_seizures": 7,
+        "n_detected": 4,
+        "sensitivity": 0.5714285714285714,
+        "n_false_alarms": 0,
+        "hours": 50.02333333333334,
+        "fa_per_hour": 0.0,
+        "median_delay_s": 63.5
+      },
+      "chb16": {
+        "n_seizures": 10,
+        "n_detected": 0,
+        "sensitivity": 0.0,
+        "n_false_alarms": 0,
+        "hours": 19.0,
+        "fa_per_hour": 0.0,
+        "median_delay_s": NaN
+      }
+    }
+  },
+  "test_event": {
+    "n_seizures": 33,
+    "n_detected": 0,
+    "sensitivity": 0.0,
+    "n_false_alarms": 0,
+    "hours": 179.1777777777778,
+    "fa_per_hour": 0.0,
+    "median_delay_s": NaN,
+    "per_patient": {
+      "chb01": {
+        "n_seizures": 11,
+        "n_detected": 0,
+        "sensitivity": 0.0,
+        "n_false_alarms": 0,
+        "hours": 73.38250000000001,
+        "fa_per_hour": 0.0,
+        "median_delay_s": NaN
+      },
+      "chb03": {
+        "n_seizures": 7,
+        "n_detected": 0,
+        "sensitivity": 0.0,
+        "n_false_alarms": 0,
+        "hours": 38.001666666666665,
+        "fa_per_hour": 0.0,
+        "median_delay_s": NaN
+      },
+      "chb11": {
+        "n_seizures": 3,
+        "n_detected": 0,
+        "sensitivity": 0.0,
+        "n_false_alarms": 0,
+        "hours": 34.79361111111111,
+        "fa_per_hour": 0.0,
+        "median_delay_s": NaN
+      },
+      "chb13": {
+        "n_seizures": 12,
+        "n_detected": 0,
+        "sensitivity": 0.0,
+        "n_false_alarms": 0,
+        "hours": 33.0,
+        "fa_per_hour": 0.0,
+        "median_delay_s": NaN
+      }
+    }
+  },
+  "importance_by_channel": {
+    "T7-P7": 0.1246,
+    "FZ-CZ": 0.0899,
+    "P7-O1": 0.083,
+    "CZ-PZ": 0.0725,
+    "F4-C4": 0.0648,
+    "T8-P8": 0.0632,
+    "P8-O2": 0.0609,
+    "P3-O1": 0.0573,
+    "C4-P4": 0.0533,
+    "F7-T7": 0.0466,
+    "F3-C3": 0.0408,
+    "C3-P3": 0.0399,
+    "FP2-F4": 0.0398,
+    "P4-O2": 0.0372,
+    "F8-T8": 0.0361,
+    "FP2-F8": 0.0308,
+    "FP1-F3": 0.0301,
+    "FP1-F7": 0.0292
+  },
+  "importance_by_feature": {
+    "line_length": 0.3696,
+    "std": 0.2666,
+    "rel_beta": 0.1623,
+    "rel_theta": 0.0839,
+    "rel_delta": 0.064,
+    "rel_alpha": 0.0537
+  },
+  "total_seconds": 36.9
+}
